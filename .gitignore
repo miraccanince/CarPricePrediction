@@ -22,5 +22,4 @@ coverage.xml
 *.ipynb_checkpoints
 data/interim
 data/processed
-models/
 reports/figures/
