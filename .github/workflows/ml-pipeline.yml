@@ -54,17 +54,7 @@ jobs:
         echo "=== Checking model performance ==="
         pwd
         ls -la reports/
-        python - << 'PY'
-          import json
-          with open('reports/metrics.json', 'r') as f:
-              metrics = json.load(f)
-          rmse = metrics['rmse']
-          r2 = metrics['r2']
-          print(f'Model Performance - RMSE: {rmse:.4f}, R²: {r2:.4f}')
-          # Fail if performance drops significantly
-          assert r2 > 0.8, f'R² too low: {r2}'
-          assert rmse < 0.25, f'RMSE too high: {rmse}'
-        PY
+        python .github/scripts/check_model_performance.py
 
     - name: Prepare artifacts
       run: |
