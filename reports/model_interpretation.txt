@@ -1,0 +1,24 @@
+
+=== Model Interpretation ===
+Intercept: 9.1111
+
+Feature Coefficients (impact on log(price)):
+symboling: 0.0008
+curbweight: 0.2102
+horsepower: 0.1310
+compressionratio: 0.2179
+citympg: -0.1598
+fueltype_gas: 0.4699
+carbody_hardtop: -0.1039
+carbody_hatchback: -0.3025
+carbody_sedan: -0.1945
+carbody_wagon: -0.3484
+drivewheel_fwd: 0.0438
+drivewheel_rwd: 0.0730
+
+Top 5 Most Important Features:
+fueltype_gas: 0.4699
+carbody_wagon: -0.3484
+carbody_hatchback: -0.3025
+compressionratio: 0.2179
+curbweight: 0.2102
