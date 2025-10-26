@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline (fixed)
 
 on:
   push:
@@ -12,9 +12,7 @@ permissions:
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: CarPricePrediction
+    # run steps from the repository root (do not set a nested working-directory)
 
     steps:
     - name: Checkout code
@@ -25,7 +23,8 @@ jobs:
       with:
         python-version: '3.9'
         cache: 'pip'
-        cache-dependency-path: CarPricePrediction/requirements.txt
+        # dependency file path should be relative to the repository root
+        cache-dependency-path: requirements.txt
 
     - name: Install dependencies
       run: |
@@ -56,15 +55,15 @@ jobs:
         pwd
         ls -la reports/
         python - << 'PY'
-        import json
-        with open('reports/metrics.json', 'r') as f:
-            metrics = json.load(f)
-        rmse = metrics['rmse']
-        r2 = metrics['r2']
-        print(f'Model Performance - RMSE: {rmse:.4f}, R²: {r2:.4f}')
-        # Fail if performance drops significantly
-        assert r2 > 0.8, f'R² too low: {r2}'
-        assert rmse < 0.25, f'RMSE too high: {rmse}'
+          import json
+          with open('reports/metrics.json', 'r') as f:
+              metrics = json.load(f)
+          rmse = metrics['rmse']
+          r2 = metrics['r2']
+          print(f'Model Performance - RMSE: {rmse:.4f}, R²: {r2:.4f}')
+          # Fail if performance drops significantly
+          assert r2 > 0.8, f'R² too low: {r2}'
+          assert rmse < 0.25, f'RMSE too high: {rmse}'
         PY
 
     - name: Prepare artifacts
@@ -78,7 +77,7 @@ jobs:
       with:
         name: model-artifacts
         path: |
-          CarPricePrediction/models/
-          CarPricePrediction/reports/
+          models/
+          reports/
         if-no-files-found: error
         retention-days: 30
